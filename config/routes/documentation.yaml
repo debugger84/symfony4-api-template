@@ -1,0 +1,5 @@
+example:
+    resource: ../../src/Documentation/Controller/V1
+    type: annotation
+    prefix: '/api/v1/document'
+    trailing_slash_on_root: false
