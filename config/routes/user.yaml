@@ -1,0 +1,5 @@
+example:
+    resource: ../../src/User/Controller/
+    type: annotation
+    prefix: '/user'
+    trailing_slash_on_root: false
