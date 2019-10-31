@@ -32,7 +32,7 @@ class CreateDocumentRequest implements RequestObjectInterface
     /**
      * @Assert\IsTrue(message="The payload should be an array")
      */
-    public function isPayloadValid()
+    public function isPayloadValid(): bool
     {
         return is_array($this->payload);
     }

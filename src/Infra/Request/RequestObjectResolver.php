@@ -125,7 +125,8 @@ class RequestObjectResolver implements ArgumentValueResolverInterface
         $data = $request->request->all();
         if (!$data && (
                 Request::METHOD_POST === $request->getMethod() ||
-                Request::METHOD_PUT === $request->getMethod())
+                Request::METHOD_PUT === $request->getMethod() ||
+                Request::METHOD_PATCH === $request->getMethod())
         ) {
             $data = json_decode($request->getContent(), true);
         }
