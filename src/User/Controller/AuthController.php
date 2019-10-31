@@ -8,7 +8,9 @@ use App\User\Request\Auth\LoginRequest;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\LcobucciJWTEncoder;
 use Lexik\Bundle\JWTAuthenticationBundle\Exception\JWTEncodeFailureException;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -30,14 +32,28 @@ class AuthController
      *     response=200,
      *     description="Returns a list of cities",
      *     @SWG\Schema(
-     *        type="object"
+     *        @SWG\Property(
+     *          property="token",
+     *          type="string"
+     *        )
      *     )
      * )
      * @SWG\Response(
      *     response=400,
      *     description="Wrong password or email",
      *     @SWG\Schema(
-     *        type="object"
+     *          example={"status": false, "error": "Email is wrong"}
+     *     )
+     * )
+     *  @SWG\Parameter(
+     *     format="application/json",
+     *     description="Login request",
+     *     name="login_request",
+     *     in="body",
+     *     required=true,
+     *     @Model(type=LoginRequest::class),
+     *     @SWG\Schema(
+     *          example={"email": "test@test.com", "password": "test"}
      *     )
      * )
      */
@@ -52,7 +68,7 @@ class AuthController
             'grants' => ['all'],
         ];
         $token = $encoder->encode($payload);
-        return new DataResponse([
+        return new JsonResponse([
             'token' => $token
         ]);
     }

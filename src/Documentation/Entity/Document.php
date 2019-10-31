@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Swagger\Annotations as SWG;
 
 /**
  * @ORM\Table(name="document")
@@ -19,6 +20,7 @@ class Document
      * @ORM\Id
      * @ORM\Column(type="uuid")
      * @ORM\GeneratedValue(strategy="UUID")
+     * @SWG\Property(type="string", format="uuid")
      */
     private $id;
     
@@ -31,6 +33,7 @@ class Document
     /**
      * @var array
      * @ORM\Column(name="payload", type="json", nullable=false)
+     * @SWG\Property(type="object")
      */
     private $payload;
 

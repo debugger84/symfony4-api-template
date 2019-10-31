@@ -4,6 +4,14 @@ nelmio_api_doc:
             title: Test application
             description: Test application example!
             version: 1.0.0
+        securityDefinitions:
+            Bearer:
+                type: apiKey
+                description: 'Value: Bearer {jwt}'
+                name: Authorization
+                in: header
+        security:
+            - Bearer: []
     areas: # to filter documented areas
         path_patterns:
             - ^/(?!doc|api/doc.json$) # Accepts routes under / except /doc
