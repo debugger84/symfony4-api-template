@@ -25,7 +25,7 @@ Timetable
 | 2 | Create API to create a document | 1h | 3h 30m | API for creation the document |
 | 3 | Create tasks and a timetable | 30m | 30m | Adding of the timetable |
 | 4 | Create API to update a document | 2h |2h 30m |  API for updating the document |
-| 5 | Create API to publish a document | 1h | | |
+| 5 | Create API to publish a document | 1h | 30m | API for publishing the document |
 | 6 | Create API to return a list of documents | 1h | | |
 | 7 | Remove unnecessary code, that have been left from the copied skeleton | 1h | | |
 | 8 | Implement the documentation for an API | 2h | | |

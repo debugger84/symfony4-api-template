@@ -33,7 +33,6 @@ class CoinManagerServiceTest extends Unit
 
         $this->tester->assertCount(1, $items);
         $this->tester->assertEquals(2, $items[0]['id']);
-        $this->tester->assertEquals(2, $items[$I]['']);
     }
 
     public function testFindWithFilteringByName()

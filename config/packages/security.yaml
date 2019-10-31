@@ -12,16 +12,6 @@ security:
         doc:
             pattern: ^/doc
             security: false
-        login:
-            pattern:  ^/user/auth/login
-            stateless: true
-            anonymous: true
-            provider: jwt
-            json_login:
-                check_path:               /user/auth/login
-                success_handler:          lexik_jwt_authentication.handler.authentication_success
-                failure_handler:          lexik_jwt_authentication.handler.authentication_failure
-
         api:
             pattern:   ^/
             stateless: true

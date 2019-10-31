@@ -43,6 +43,23 @@ class DocumentUpdater
         return $document;
     }
 
+    /**
+     * @param Document $document
+     * @return Document
+     * @throws \Exception
+     */
+    public function publish(Document $document): Document
+    {
+        if ($document->getStatus()->equals(DocumentStatus::published())) {
+            return $document;
+        }
+        $document->publish();
+
+        $this->em->flush();
+
+        return $document;
+    }
+
     private function mergePayload(array $oldPayload, array $newPayload): array
     {
         $result = array_replace_recursive($oldPayload, $newPayload);

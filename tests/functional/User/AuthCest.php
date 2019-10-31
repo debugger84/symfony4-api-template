@@ -14,7 +14,7 @@ class AuthCest
      */
     public function authUser(FunctionalTester $I)
     {
-        $I->wantToTest('Get list of cities');
+        $I->wantToTest('Auth user');
         $I->haveHttpHeader('Content-Type', 'application/json');
 
         $I->sendPOST('/user/auth/login', [
