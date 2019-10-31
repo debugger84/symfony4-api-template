@@ -2,7 +2,6 @@
 
 namespace App\User\Controller;
 
-use App\Infra\Response\DataResponse;
 use App\Infra\Response\ErrorResponse;
 use App\User\Request\Auth\LoginRequest;
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
