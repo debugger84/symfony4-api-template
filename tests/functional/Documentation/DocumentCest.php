@@ -7,6 +7,7 @@ use App\Documentation\Controller\V1\DocumentController;
 use App\Documentation\Entity\Document;
 use App\Documentation\Entity\Enum\DocumentStatus;
 use App\Tests\FunctionalTester;
+use Ramsey\Uuid\Uuid;
 
 class DocumentCest
 {
@@ -194,5 +195,114 @@ class DocumentCest
             'status' => false,
             'error' => 'The document was not found',
         ]);
+    }
+
+    /**
+     * @param FunctionalTester $I
+     * @see DocumentController::getListOfDocuments()
+     */
+    public function getListOfDocuments(FunctionalTester $I)
+    {
+        $I->wantToTest('Get list of documents');
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->amAuthenticatedAsUser1();
+
+        /** @var Uuid $id */
+        $id = $I->haveInRepository(Document::class, [
+            'status' => DocumentStatus::draft()->getValue(),
+            'payload' => [],
+        ]);
+
+        $I->sendGET('/api/v1/document', []);
+
+        $resp = \GuzzleHttp\json_decode($I->grabResponse(), true);
+
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+        $I->seeResponseContainsJson([
+            'document' => [
+                0 => [
+                    'id' => $id->toString(),
+                ],
+                1 => [
+                    'id' => '00000000-0000-0000-0000-000000000001',
+                ]
+            ],
+        ]);
+    }
+
+    /**
+     * @param FunctionalTester $I
+     * @see DocumentController::getListOfDocuments()
+     */
+    public function getListFromTheSecondPage(FunctionalTester $I)
+    {
+        $I->wantToTest('Get list of documents from the second page');
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->amAuthenticatedAsUser1();
+
+        /** @var Uuid $id */
+        $id = $I->haveInRepository(Document::class, [
+            'status' => DocumentStatus::draft()->getValue(),
+            'payload' => [],
+        ]);
+
+        $I->sendGET('/api/v1/document', [
+            'page' => 2,
+            'perPage' => 1,
+        ]);
+
+        $resp = \GuzzleHttp\json_decode($I->grabResponse(), true);
+
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+        $I->seeResponseContainsJson([
+            'document' => [
+                0 => [
+                    'id' => '00000000-0000-0000-0000-000000000001',
+                ]
+            ],
+            "pagination"  => [
+                "page" => 2,
+                "perPage" => 1,
+                "total" => 2
+            ]
+        ]);
+    }
+
+    /**
+     * @param FunctionalTester $I
+     * @see DocumentController::getListOfDocuments()
+     */
+    public function getOneDocument(FunctionalTester $I)
+    {
+        $I->wantToTest('Get document');
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->amAuthenticatedAsUser1();
+
+        /** @var Uuid $id */
+        $id = $I->haveInRepository(Document::class, [
+            'status' => DocumentStatus::draft()->getValue(),
+            'payload' => [],
+        ]);
+
+        $I->sendGET('/api/v1/document/00000000-0000-0000-0000-000000000001', [
+            'page' => 2,
+            'perPage' => 1,
+        ]);
+
+        $resp = \GuzzleHttp\json_decode($I->grabResponse(), true);
+
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+        $I->seeResponseContainsJson([
+            'document' => [
+                'id' => '00000000-0000-0000-0000-000000000001',
+                'payload' => [],
+                'status' => DocumentStatus::draft()->getValue()
+            ],
+        ]);
+        $I->seeResponseJsonMatchesJsonPath('$.document.createAt');
+        $I->seeResponseJsonMatchesJsonPath('$.document.modifyAt');
     }
 }
