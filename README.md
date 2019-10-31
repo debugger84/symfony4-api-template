@@ -14,3 +14,19 @@ How to start
 * Add data to database and run `make run-command`
 
 If you want to know all available commands from the Makefile - run `make help`  
+
+
+Timetable
+==
+
+| # | Task     | Estimation | Spent | Comment |
+|---|----------|----|-----|-------|
+| 1 | Create skeleton of a project | 1h | 40m | Copying of own template of a project to the new project |
+| 2 | Create API to create a document | 1h | 3h 30m | API for creation the document |
+| 3 | Create tasks and a timetable | 30m | 30m | Adding of the timetable |
+| 4 | Create API to update a document | 2h | | |
+| 5 | Create API to publish a document | 1h | | |
+| 6 | Create API to return a list of documents | 1h | | |
+| 7 | Remove unnecessary code, that have been left from the copied skeleton | 1h | | |
+| 8 | Implement the documentation for an API | 2h | | |
+| 9 | Make the final polishing of code | 1h | | |
