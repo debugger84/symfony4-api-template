@@ -53,6 +53,7 @@ class Document
 
     /**
      * Document constructor.
+     * @param array $payload
      * @throws \Exception
      */
     public function __construct(array $payload = [])

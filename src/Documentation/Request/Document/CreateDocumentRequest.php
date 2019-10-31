@@ -14,7 +14,7 @@ class CreateDocumentRequest implements RequestObjectInterface
 
     /**
      * CreateDocumentRequest constructor.
-     * @param int $payload
+     * @param array $payload
      */
     public function __construct(array $payload = [])
     {

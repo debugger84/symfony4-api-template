@@ -12,10 +12,12 @@ use Doctrine\ORM\NonUniqueResultException;
 use Exception;
 use Generator;
 use Psr\Log\LoggerInterface;
+use stdClass;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ArgumentValueResolverInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Exception\ExceptionInterface;
 use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Validator\ConstraintViolationList;
@@ -55,6 +57,9 @@ class RequestObjectResolver implements ArgumentValueResolverInterface
 
     public function supports(Request $request, ArgumentMetadata $argument)
     {
+        if ($argument->getType() === null) {
+            return false;
+        }
         return is_subclass_of($argument->getType(), RequestObjectInterface::class);
     }
 
@@ -70,6 +75,9 @@ class RequestObjectResolver implements ArgumentValueResolverInterface
     {
         $data = $this->getDataFromRequest($request);
         $normalizer = new PropertyNormalizer();
+        if ($argument->getType() === null) {
+            throw new Exception('Argument type is null');
+        }
         $dto = $normalizer->denormalize($data, $argument->getType());
 
         $this->logRequest($request, $data, $dto);
@@ -145,7 +153,7 @@ class RequestObjectResolver implements ArgumentValueResolverInterface
         return str_replace('://', '---', $request->getUri());
     }
 
-    private function log(string $message, array $context, $method): string
+    private function log(string $message, array $context, $method): void
     {
         if (method_exists($this->logger, $method)) {
             $this->logger->$method($message, $context);
@@ -153,7 +161,7 @@ class RequestObjectResolver implements ArgumentValueResolverInterface
     }
 
     /**
-     * @param $dto
+     * @param stdClass $dto
      * @return array
      */
     private function validateDTO($dto): array
@@ -177,7 +185,7 @@ class RequestObjectResolver implements ArgumentValueResolverInterface
     {
         $token = $this->storage->getToken();
         if ($token instanceof TokenInterface) {
-            /** @var JwtUser $user */
+            /** @var UserInterface $user */
             $user = $token->getUser();
             if ($user instanceof JwtUser) {
                 return new CurrentUser($user->getUserId());

@@ -52,7 +52,7 @@ class FractalPaginator implements PaginatorInterface
      */
     public function getLastPage()
     {
-        return ceil($this->wholeCount / $this->countPerPage);
+        return (int) ceil($this->wholeCount / $this->countPerPage);
     }
 
     /**

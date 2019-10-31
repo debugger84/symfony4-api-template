@@ -4,6 +4,7 @@ namespace App\Documentation\Repository\Specification\Document\Ordering;
 
 use App\Documentation\Entity\Document;
 use App\Documentation\Repository\DocumentRepository;
+use Rb\Specification\Doctrine\Exception\InvalidArgumentException;
 use Rb\Specification\Doctrine\Query\OrderBy;
 use Rb\Specification\Doctrine\Specification;
 
@@ -15,7 +16,7 @@ class NewerFirst extends Specification
 {
     /**
      * LastConfirmed constructor.
-     * @throws \Rb\Specification\Doctrine\Exception\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function __construct()
     {

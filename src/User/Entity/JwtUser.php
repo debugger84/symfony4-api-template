@@ -10,9 +10,9 @@ class JwtUser extends BaseJWTUser
     /**
      * @param $username
      * @param array $payload
-     * @return JwtUser|BaseJWTUser|JWTUserInterface
+     * @return self
      */
-    public static function createFromPayload($username, array $payload)
+    public static function createFromPayload($username, array $payload): self
     {
         return new self($username, $payload['grants']);
     }

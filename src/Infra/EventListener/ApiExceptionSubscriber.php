@@ -91,7 +91,7 @@ class ApiExceptionSubscriber implements EventSubscriberInterface
         $event->setResponse($response);
     }
 
-    private function getUri(ExceptionEvent $event)
+    private function getUri(ExceptionEvent $event): string
     {
         return str_replace('://', '---', $event->getRequest()->getUri());
     }

@@ -26,9 +26,9 @@ class InvalidRequestDataException extends \Exception
     }
 
     /**
-     * @return mixed
+     * @return array
      */
-    public function getData()
+    public function getData(): array
     {
         return $this->data;
     }

@@ -5,7 +5,7 @@ namespace App\Infra\Request;
 class CurrentUser implements CurrentUserInterface
 {
     /**
-     * @var int
+     * @var string
      */
     private $id;
 
@@ -13,13 +13,13 @@ class CurrentUser implements CurrentUserInterface
      * CurrentUser constructor.
      * @param int $id
      */
-    public function __construct(int $id)
+    public function __construct(string $id)
     {
         $this->id = $id;
     }
 
 
-    public function getId(): int
+    public function getId(): string
     {
         return $this->getId();
     }

@@ -20,7 +20,7 @@ class BaseRepository extends ServiceEntityRepository
      * @return \stdClass[]
      * @throws \Rb\Specification\Doctrine\Exception\LogicException
      */
-    public function findAllBySpecification(Specification $specification, $limit = null, $offset = null)
+    public function findAllBySpecification(Specification $specification, $limit = null, $offset = null): array
     {
         $query = $this->match($specification);
 
@@ -41,10 +41,10 @@ class BaseRepository extends ServiceEntityRepository
      * @param Specification $specification
      * @param int|null $limit
      * @param int|null $offset
-     * @return \stdClass[]
+     * @return array[]
      * @throws \Rb\Specification\Doctrine\Exception\LogicException
      */
-    public function findArrayResultBySpecification(Specification $specification, $limit = null, $offset = null)
+    public function findArrayResultBySpecification(Specification $specification, $limit = null, $offset = null): array
     {
         $query = $this->match($specification);
 
@@ -94,13 +94,15 @@ class BaseRepository extends ServiceEntityRepository
      * @return array
      * @throws \Rb\Specification\Doctrine\Exception\LogicException
      */
-    public function findColumnBySpecification(Specification $specification, string $columnName, $limit = null, $offset = null)
+    public function findColumnBySpecification(Specification $specification, string $columnName, $limit = null, $offset = null): array
     {
-        $rows = $this->findAllBySpecification($specification, $limit, $offset);
+        $rows = $this->findArrayResultBySpecification($specification, $limit, $offset);
 
         $columnValues = [];
         foreach ($rows as $row) {
-            $columnValues[] = $row[$columnName];
+            if (isset($row[$columnName])) {
+                $columnValues[] = $row[$columnName];
+            }
         }
 
         return $columnValues;
@@ -127,7 +129,7 @@ class BaseRepository extends ServiceEntityRepository
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Rb\Specification\Doctrine\Exception\LogicException
      */
-    public function findCountBySpecification(Specification $specification)
+    public function findCountBySpecification(Specification $specification): int
     {
         $query = $this->match($specification);
         $paginator = new Paginator($query);

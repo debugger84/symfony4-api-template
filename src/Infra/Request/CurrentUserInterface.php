@@ -4,5 +4,5 @@ namespace App\Infra\Request;
 
 interface CurrentUserInterface
 {
-    public function getId(): int;
+    public function getId(): string;
 }

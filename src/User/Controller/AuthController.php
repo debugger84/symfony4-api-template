@@ -24,8 +24,8 @@ class AuthController
      * Login the user
      * @Route("/login", name="get_all", methods={"POST"})
      * @param LoginRequest $request
-     * @param JWTEncoderInterface $encoder
-     * @return Response
+     * @param LcobucciJWTEncoder $encoder
+     * @return JsonResponse
      * @throws JWTEncodeFailureException
      * @SWG\Response(
      *     response=200,
@@ -44,7 +44,7 @@ class AuthController
      *          example={"status": false, "error": "Email is wrong"}
      *     )
      * )
-     *  @SWG\Parameter(
+     * @SWG\Parameter(
      *     format="application/json",
      *     description="Login request",
      *     name="login_request",
@@ -56,7 +56,7 @@ class AuthController
      *     )
      * )
      */
-    public function loginWithPassword(LoginRequest $request, LcobucciJWTEncoder $encoder)
+    public function loginWithPassword(LoginRequest $request, LcobucciJWTEncoder $encoder): JsonResponse
     {
         // simple method of authentication for test purposes
         if ($request->getEmail() !== 'test@test.com' || $request->getPassword() !== 'test') {

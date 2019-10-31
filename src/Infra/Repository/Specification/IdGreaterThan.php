@@ -20,7 +20,7 @@ class IdGreaterThan extends Specification
     public function __construct(int $value, string $dqlAlias)
     {
         $specs = [
-            new GreaterThan('id', $value, $dqlAlias),
+            new GreaterThan('id', (string) $value, $dqlAlias),
         ];
         parent::__construct($specs);
     }

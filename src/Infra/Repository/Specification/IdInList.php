@@ -21,9 +21,9 @@ class IdInList extends Specification
     /**
      * IdInList constructor.
      * @param array $ids
-     * @throws \Rb\Specification\Doctrine\Exception\InvalidArgumentException
+     * @param string $dqlAlias
      */
-    public function __construct(array $ids, $dqlAlias)
+    public function __construct(array $ids, string $dqlAlias)
     {
         $specs = [
             new In('id', $ids, $dqlAlias),

@@ -6,7 +6,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ErrorResponse extends JsonResponse
 {
-    public function __construct($message = null, $status = 400, array $headers = array(), array $validationErrors = [])
+    public function __construct(?string $message = null, int $status = 400, array $headers = array(), array $validationErrors = [])
     {
         $data = [
             'status' => false,

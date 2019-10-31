@@ -16,7 +16,7 @@ class UserRequest implements UserRequestObjectInterface
         return $this->user;
     }
 
-    public function setUser(CurrentUserInterface $user)
+    public function setUser(CurrentUserInterface $user): self
     {
         $this->user = $user;
         return $this;
