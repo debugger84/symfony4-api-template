@@ -148,6 +148,54 @@ class DocumentCest
 
     /**
      * @param FunctionalTester $I
+     * @see DocumentController::updateDocument()
+     */
+    public function updateDocumentWithPatchWithoutPayload(FunctionalTester $I)
+    {
+        $I->wantToTest('Update a document with data, that has not a payload property');
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->amAuthenticatedAsUser1();
+
+        $I->sendPATCH('/api/v1/document/00000000-0000-0000-0000-000000000001', [
+            'document' => [
+            ]
+        ]);
+
+        $resp = \GuzzleHttp\json_decode($I->grabResponse(), true);
+
+        $I->seeResponseCodeIs(400);
+        $I->seeResponseIsJson();
+        $I->seeResponseContainsJson([
+            'status' => false,
+            'error' => 'The field document.payload is required',
+        ]);
+    }
+
+    /**
+     * @param FunctionalTester $I
+     * @see DocumentController::updateDocument()
+     */
+    public function updateDocumentWithEmptyBody(FunctionalTester $I)
+    {
+        $I->wantToTest('Update a document with data, that has not a document property');
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->amAuthenticatedAsUser1();
+
+        $I->sendPATCH('/api/v1/document/00000000-0000-0000-0000-000000000001', [
+        ]);
+
+        $resp = \GuzzleHttp\json_decode($I->grabResponse(), true);
+
+        $I->seeResponseCodeIs(400);
+        $I->seeResponseIsJson();
+        $I->seeResponseContainsJson([
+            'status' => false,
+            'error' => 'The field document.payload is required',
+        ]);
+    }
+
+    /**
+     * @param FunctionalTester $I
      * @see DocumentController::publishDocument()
      */
     public function publishDocument(FunctionalTester $I)
@@ -173,6 +221,9 @@ class DocumentCest
             'id' => '00000000-0000-0000-0000-000000000001',
             'status' => DocumentStatus::published()->getValue()
         ]);
+
+        $I->sendPOST('/api/v1/document/00000000-0000-0000-0000-000000000001/publish', []);
+        $I->seeResponseCodeIs(200);
     }
 
     /**

@@ -9,7 +9,7 @@ class UpdateDocumentRequest implements RequestObjectInterface
 {
     /**
      * @var array
-     * @Assert\NotBlank(message="The document field is required")
+     * @Assert\NotNull(message="The document field is required")
      */
     private $document;
 
